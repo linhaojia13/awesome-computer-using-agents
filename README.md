@@ -43,6 +43,10 @@
 > 纯sft训练qwen-vl-32b，osworld上分数34.8
 
 [2506] [AgentSynth: Scalable Task Generation for Generalist Computer-Use Agents](https://arxiv.org/pdf/2506.14205)
+> 利用信息不对称，链式生成子任务​，组合成复杂任务。任务生成成功率98%，但评估时SOTA模型在Level 6任务成功率仅4%​​  
+> 可控任务难度: 通过子任务数量精确调控复杂度，Level 6任务平均需40–60步操作  
+> ​高真实性任务: 人工评估显示：任务可行性87%​、子任务连贯性91%​、角色相关性94%​  
+> 揭示LLM代理三大缺陷：鼠标点击不精准（59.1%动作）、状态跟踪错误、错误恢复能力缺失（第5.3节）
 
 [2505] [Scaling Computer-Use Grounding via User Interface Decomposition and Synthesis](https://osworld-grounding.github.io)
 > 大规模合成数据集JEDI​ (400w) 和精标的基准测试OSWORLD-G​ (564)  
@@ -53,6 +57,12 @@
 [2505][ZeroGUI: Automating Online GUI Learning at Zero Human Cost](https://arxiv.org/pdf/2505.23762)
 > 复用用osworld的task config，用LLM生成更多指令
 > task verifier用qwen2.5vl-32b
+
+[2504] [AgentRewardBench: Evaluating Automatic Evaluations of Web Agent Trajectories](https://arxiv.org/abs/2504.08942)
+> 在不同浏览器benchmarkWebArena/VisualWebArena/AssistantBench/WorkArena/WorkArena++上推了GPT-4o/Claude 3.7S/Qwen2.5-VL/Llama 3.3的轨迹1392条，人工精心标注任务成功、副作用、重复行为  
+> 基于这些GT，分析现有benchmark的评估的准确率，揭示规则评估的严重缺陷，和LLM评估的瓶颈  
+> 提出新型简化评估框架，就是改了prompt
+
 
 🌟 [2501] [UI-TARS: Pioneering Automated GUI Interaction with Native Agents](https://arxiv.org/pdf/2501.12326)
 > grounding数据从公开数据集中收集  
@@ -68,12 +78,12 @@ Information-Seeking Formalization](https://arxiv.org/pdf/2507.15061)
 > formulation-driven data synth，将question用集合交并的语言形式化  
 > 基于形式化描述，利用expander agent拓展seed question
 
-[2412][Aguvis: Unified Pure Vision Agents for Autonomous GUI Interaction](https://aguvis-project.github.io)
+[2412] [Aguvis: Unified Pure Vision Agents for Autonomous GUI Interaction](https://aguvis-project.github.io)
 > stage-1: 基础定位数据（103.6万条）  
 > stage-2: 规划推理轨迹数据（3.5万条），浏览器6,253，移动端27,647  
 > 轨迹数据由GPT-4o生成思考链三元组(obs, reason, action)
 
-[2412][ICLR2025] [AgentTrek: Agent Trajectory Synthesis via Guiding Replay with Web Tutorials](https://agenttrek.github.io)
+[2412] [ICLR2025] [AgentTrek: Agent Trajectory Synthesis via Guiding Replay with Web Tutorials](https://agenttrek.github.io)
 > 爬了1880w教程，LLM筛选出23w，教程喂给VLM取执行任务，获得1w轨迹
 > hf数据集应该是可用的，虽然hf的可视化展示是单轮的，但论文提到轨迹是多轮的，但以单轮的格式存储
 
@@ -93,7 +103,7 @@ Information-Seeking Formalization](https://arxiv.org/pdf/2507.15061)
 
 ## 6. Others
 ### x.1 General Agent
-[Kimi K2: Open Agentic Intelligence](https://moonshotai.github.io/Kimi-K2/)
+[2507] [Kimi K2: Open Agentic Intelligence](https://moonshotai.github.io/Kimi-K2/)
 
 [2507] [GLM-4.1V-Thinking: Towards Versatile Multimodal Reasoning with Scalable Reinforcement Learning](https://arxiv.org/pdf/2507.01006)
 > osworld上分数不太好只有14.7，但可能是没有专项微调的原因，潜力应该挺大
