@@ -73,6 +73,11 @@ Information-Seeking Formalization](https://arxiv.org/pdf/2507.15061)
 > formulation-driven data synth，将question用集合交并的语言形式化  
 > 基于形式化描述，利用expander agent拓展seed question
 
+[2502] [InSTA: Towards Internet-Scale Training For Agents](https://arxiv.org/abs/2502.06776)
+> 自动化三级数据流水线: LLM任务生成器、LLM轨迹生成器​、LLM轨迹过滤器  
+> 基于浏览器沙盒实例​生产真实的数据
+
+
 [2412] [Aguvis: Unified Pure Vision Agents for Autonomous GUI Interaction](https://aguvis-project.github.io)
 > stage-1: 基础定位数据（103.6万条）  
 > stage-2: 规划推理轨迹数据（3.5万条），浏览器6,253，移动端27,647  
