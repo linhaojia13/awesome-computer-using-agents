@@ -58,11 +58,6 @@
 > 复用用osworld的task config，用LLM生成更多指令
 > task verifier用qwen2.5vl-32b
 
-[2504] [AgentRewardBench: Evaluating Automatic Evaluations of Web Agent Trajectories](https://arxiv.org/abs/2504.08942)
-> 在不同浏览器benchmarkWebArena/VisualWebArena/AssistantBench/WorkArena/WorkArena++上推了GPT-4o/Claude 3.7S/Qwen2.5-VL/Llama 3.3的轨迹1392条，人工精心标注任务成功、副作用、重复行为  
-> 基于这些GT，分析现有benchmark的评估的准确率，揭示规则评估的严重缺陷，和LLM评估的瓶颈  
-> 提出新型简化评估框架，就是改了prompt
-
 
 🌟 [2501] [UI-TARS: Pioneering Automated GUI Interaction with Native Agents](https://arxiv.org/pdf/2501.12326)
 > grounding数据从公开数据集中收集  
@@ -94,6 +89,11 @@ Information-Seeking Formalization](https://arxiv.org/pdf/2507.15061)
 🌟 [2505] [UI-Genie: A Self-Improving Approach for Iteratively Boosting MLLM-based Mobile GUI Agents](https://arxiv.org/pdf/2505.21496)
 > 多粒度奖励模型​：同时支持step-level和outcome-level评估
 > 核心要点在于如何搞到数据来训练reward model
+
+[2504] [AgentRewardBench: Evaluating Automatic Evaluations of Web Agent Trajectories](https://arxiv.org/abs/2504.08942)
+> 在不同浏览器benchmarkWebArena/VisualWebArena/AssistantBench/WorkArena/WorkArena++上推了GPT-4o/Claude 3.7S/Qwen2.5-VL/Llama 3.3的轨迹1392条，人工精心标注任务成功、副作用、重复行为  
+> 基于这些GT，分析现有benchmark的评估的准确率，揭示规则评估的严重缺陷，和LLM评估的瓶颈  
+> 提出新型简化评估框架，就是改了prompt
 
 ## 5. Training Algorithm
 [2504] [UI-TARS-1.5](https://seed-tars.com/1.5/)
