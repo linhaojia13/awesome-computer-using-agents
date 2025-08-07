@@ -37,6 +37,16 @@
 
 ## 3. Data Synth
 ### 3.1 Computer
+[2508] [SEAgent: Self-Evolving Computer Use Agent with
+Autonomous Learning from Experience](https://arxiv.org/pdf/2508.04700)
+> Curriculum Generator: 生成任务，搞了4245个任务  
+> World State Model: 也就是reward model, 用的是基于osworld chome的43个task得到的860条轨迹训练qwen2.5vl-7b得到的
+
+[2508] [VeriGUI: Verifiable Long-Chain GUI Dataset](https://arxiv.org/pdf/2508.04026)
+> VeriGUI 构建了首个支持 ​长链复杂任务​（数百步操作）和 ​子任务级验证​ 的 GUI 数据集，覆盖桌面和网页环境。  
+> 数据集持续更新中，目前只有130网页任务，桌面任务即将发布。  
+> 桌面验证机制基于截图和系统属性的状态检查，由人类专家在标注过程中实现函数化
+
 🌟 [2508] [OpenCUA: Open Foundations for Computer-Use Agents](https://opencua.xlang.ai)
 > 634名标注员针对200+应用/网站，标记了20k+任务的轨迹  
 > 开源了标注软件、数据集  
