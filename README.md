@@ -26,10 +26,17 @@
 > 369个task，每个task对应一个脚本作为验证器 
 
 ## 2. Architecture
+🌟 [2508] [CoAct-1: Computer-using Agents with Coding as Actions](https://arxiv.org/pdf/2508.03923)
+> 三大智能体分工​: 1) Orchestrator​：任务分解与决策中枢; 2) Programmer​：通过代码与系统直接交互; 3) GUI Operator​：基于视觉模型执行图形操作  
+> CoAct-1 vs GTA-1: 成功率60.76 vs 45.2，平均步数10.15 vs 15.22
+
 [2507] [GTA1: GUI Test-time Scaling Agent](https://arxiv.org/pdf/2507.05791)
 > planner + judge + grouder  
 > planner输出多个candidate action，judge从中选择action，grouder转换为带坐标的动作
 > rl训练grouder，o3作为planner+judge，osworld能达到45%
+
+[2506][Agent-RewardBench: Towards a Unified Benchmark for Reward Modeling across Perception, Planning, and Safety in Real-World Multimodal Agents](https://arxiv.org/pdf/2506.21252)
+> 覆盖agent任务太多样：网页导航（417）​、具身智能（317）、旅行规划（180）
 
 🌟 [2505][Scaling Computer-Use Grounding via User Interface Decomposition and Synthesis](https://osworld-grounding.github.io)
 > 用JEDI-7B作为grouding模型，配合GPT-4o规划器，在OSWorld基准上的成功率高达27%  
@@ -37,7 +44,12 @@
 
 ## 3. Data Synth
 ### 3.1 Computer
-[2508] [SEAgent: Self-Evolving Computer Use Agent with
+[2508][SEA: Self-Evolution Agent with Step-wise Reward for Computer Use](https://arxiv.org/pdf/2508.04037)
+> 7b模型在osworld上30.1，比SE-Agent、OpenCUA都更强  
+> 基于QWen2.5-VL-72B训练出来的step model可以判断action的正确性，但没展示prompt  
+> 通过few-shot in-context Learning去生产task
+
+🌟 [2508] [SEAgent: Self-Evolving Computer Use Agent with
 Autonomous Learning from Experience](https://arxiv.org/pdf/2508.04700)
 > Curriculum Generator: 生成任务，搞了4245个任务  
 > World State Model: 也就是reward model, 用的是基于osworld chome的43个task得到的860条轨迹训练qwen2.5vl-7b得到的
@@ -83,6 +95,11 @@ Information-Seeking Formalization](https://arxiv.org/pdf/2507.15061)
 > formulation-driven data synth，将question用集合交并的语言形式化  
 > 基于形式化描述，利用expander agent拓展seed question
 
+[2504] [Breaking the Data Barrier – Building GUI Agents Through Task Generalization](https://arxiv.org/pdf/2504.10127)
+> 针对Qwen2-VL-7B-Instruct，提出在预训练和微调之间引入一个中间训练阶段，使用11种不同任务的数据集（包括多模态和纯文本任务），以提升模型的基础能力（如推理、感知和规划），对GUI任务帮助很大  
+> 纯文本数学数据（MathInstruct）在WebArena基准上提升5.6%，在AndroidWorld上提升5.4%  
+> 多模态数学数据提升AndroidWorld性能6.3%
+
 [2502] [InSTA: Towards Internet-Scale Training For Agents](https://arxiv.org/abs/2502.06776)
 > 自动化三级数据流水线: LLM任务生成器、LLM轨迹生成器​、LLM轨迹过滤器  
 > 基于浏览器沙盒实例​生产真实的数据
@@ -96,6 +113,9 @@ Information-Seeking Formalization](https://arxiv.org/pdf/2507.15061)
 [2412] [ICLR2025] [AgentTrek: Agent Trajectory Synthesis via Guiding Replay with Web Tutorials](https://agenttrek.github.io)
 > 爬了1880w教程，LLM筛选出23w，教程喂给VLM取执行任务，获得1w轨迹
 > hf数据集应该是可用的，虽然hf的可视化展示是单轮的，但论文提到轨迹是多轮的，但以单轮的格式存储
+
+### 3.3 Mobile
+
 
 ## 4. Reward Model
 [2505][ZeroGUI: Automating Online GUI Learning at Zero Human Cost](https://arxiv.org/pdf/2505.23762)
