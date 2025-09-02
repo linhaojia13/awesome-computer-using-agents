@@ -44,6 +44,11 @@
 
 ## 3. Data Synth
 ### 3.1 Computer
+🌟 [2508][Mobile-Agent-v3: Foundamental Agents for GUI Automation](https://arxiv.org/pdf/2508.15144)
+> 预训练+sft得到gui-owl-7b在osworld上29.4；在osworld上专门rl后是34.9  
+> 
+
+
 [2508][SEA: Self-Evolution Agent with Step-wise Reward for Computer Use](https://arxiv.org/pdf/2508.04037)
 > 7b模型在osworld上30.1，比SE-Agent、OpenCUA都更强  
 > 基于QWen2.5-VL-72B训练出来的step model可以判断action的正确性，但没展示prompt  
@@ -118,6 +123,10 @@ Information-Seeking Formalization](https://arxiv.org/pdf/2507.15061)
 
 
 ## 4. Reward Model
+[2508][ComputerRL: Scaling End-to-End Online Reinforcement Learning for Computer Use Agents](https://arxiv.org/pdf/2508.14040)
+> We manually collect extensive, well-defined tasks and corresponding evaluation functions. 通过人工构建任务、验证函数  
+> If the trajectory successfully solves the task, we assign a reward of 1 to every action that is both correctly formatted and substantially contributes to the solution. 验证函数应该是复杂到每个action是否对任务完成有益。
+
 [2505][ZeroGUI: Automating Online GUI Learning at Zero Human Cost](https://arxiv.org/pdf/2505.23762)
 > task verifier用qwen2.5vl-32b
 
