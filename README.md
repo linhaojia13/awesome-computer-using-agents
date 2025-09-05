@@ -35,18 +35,26 @@
 > planner输出多个candidate action，judge从中选择action，grouder转换为带坐标的动作
 > rl训练grouder，o3作为planner+judge，osworld能达到45%
 
-[2506][Agent-RewardBench: Towards a Unified Benchmark for Reward Modeling across Perception, Planning, and Safety in Real-World Multimodal Agents](https://arxiv.org/pdf/2506.21252)
-> 覆盖agent任务太多样：网页导航（417）​、具身智能（317）、旅行规划（180）
-
 🌟 [2505][Scaling Computer-Use Grounding via User Interface Decomposition and Synthesis](https://osworld-grounding.github.io)
 > 用JEDI-7B作为grouding模型，配合GPT-4o规划器，在OSWorld基准上的成功率高达27%  
+> jedi-7b-o3在OSWorld上则是高达50
 > 训练后的模型（如JEDI-7B）​不直接输出PyAutoGUI代码，而是预测结构化动作（38页附录A.4）
+
+[2504][Agent S2: A Compositional Generalist-Specialist Framework for Computer Use Agents](https://arxiv.org/pdf/2504.00906)
+
 
 ## 3. Data Synth
 ### 3.1 Computer
+🌟 [2509][UI-TARS-2 Technical Report: Advancing GUI Agent with Multi-Turn Reinforcement Learning](https://arxiv.org/pdf/2509.02544)
+
+
 🌟 [2508][Mobile-Agent-v3: Foundamental Agents for GUI Automation](https://arxiv.org/pdf/2508.15144)
 > 预训练+sft得到gui-owl-7b在osworld上29.4；在osworld上专门rl后是34.9  
-> 
+
+
+[2508][ComputerRL: Scaling End-to-End Online Reinforcement Learning for Computer Use Agents](https://arxiv.org/pdf/2508.14040)
+> We manually collect extensive, well-defined tasks and corresponding evaluation functions. 通过人工构建任务、验证函数  
+> If the trajectory successfully solves the task, we assign a reward of 1 to every action that is both correctly formatted and substantially contributes to the solution. 验证函数应该是复杂到每个action是否对任务完成有益。
 
 
 [2508][SEA: Self-Evolution Agent with Step-wise Reward for Computer Use](https://arxiv.org/pdf/2508.04037)
@@ -127,6 +135,9 @@ Information-Seeking Formalization](https://arxiv.org/pdf/2507.15061)
 > We manually collect extensive, well-defined tasks and corresponding evaluation functions. 通过人工构建任务、验证函数  
 > If the trajectory successfully solves the task, we assign a reward of 1 to every action that is both correctly formatted and substantially contributes to the solution. 验证函数应该是复杂到每个action是否对任务完成有益。
 
+[2506][Agent-RewardBench: Towards a Unified Benchmark for Reward Modeling across Perception, Planning, and Safety in Real-World Multimodal Agents](https://arxiv.org/pdf/2506.21252)
+> 覆盖agent任务太多样：网页导航（417）​、具身智能（317）、旅行规划（180）
+
 [2505][ZeroGUI: Automating Online GUI Learning at Zero Human Cost](https://arxiv.org/pdf/2505.23762)
 > task verifier用qwen2.5vl-32b
 
@@ -140,10 +151,141 @@ Information-Seeking Formalization](https://arxiv.org/pdf/2507.15061)
 > 提出新型简化评估框架，就是改了prompt
 
 ## 5. Training Algorithm
+
+| Model | Score | CT | SFT | DPO | RFT | RLVR | Max Steps |
+|-------|-------|----|----|-----|-----|------|-----------|
+| uitars-2 | 47.5 | ✅ | ✅ | | ✅ | ✅ | ∞ |
+| autoglm-os-9b | 47.3 | | | | ✅ | | |
+| seagent-7b | 34.5 | | ✅ | ✅ | | | |
+| opencua-32b/7b | 34.1/28.2 | | ✅ | | | | 50 |
+| sea-7b | 30.1 | | | | ✅ | | |
+| gui-owl-7b | 29.4 | | ✅ | | | | 50 |
+| uitars-72b-dpo | 25.8 | | ✅ | ✅ | | | 50 |
+
+🌟 [2509][UI-TARS-2 Technical Report: Advancing GUI Agent with Multi-Turn Reinforcement Learning](https://arxiv.org/pdf/2509.02544)
+**训练流程：**
+- **CT (Curriculum Training)**: 任务教程、教学视频、in-situ annotation
+- **SFT (Supervised Fine-Tuning)**: interactive annotation
+- **RLVR (Reinforcement Learning with Verifier Reward)**: 基于验证器奖励的强化学习
+
+**三类训练任务：**
+- **GUI-Browsing**: Deep research任务，但不能调用搜索API，只能操作网页
+- **GUI-General**: 多样化的网站操作任务
+- **Gameplay**: 浏览器中的小游戏，合成游戏
+
+**训练算法：** PPO (Proximal Policy Optimization)
+
+**奖励设计：**
+- **Gameplay**: 使用function验证
+- **GUI-Browsing**: 使用LLM根据GT匹配
+- **GUI-General**: 使用UI-TARS-2作为ORM (Outcome Reward Model)
+
+**模型融合策略：** 同一个SFT模型分别用三类任务进行RL训练，然后进行参数平均 (params avg)
+
+🌟 [2508][Mobile-Agent-v3: Foundamental Agents for GUI Automation](https://arxiv.org/pdf/2508.15144)
+> 预训练+sft得到gui-owl-7b在osworld上29.4；在osworld上专门rl后是34.9  
+
+- **Pre-training Phase（预训练阶段）**：
+  - 涵盖基础 UI 理解、交互轨迹、通用推理的大规模预训练语料
+  - 持续预训练 Qwen2.5-VL，强化 GUI 元素识别、动作预测、通用推理等基础能力
+- **Iterative Tuning Phase（迭代调优阶段）**：
+  - 在桌面、移动等真实环境中部署模型执行大规模任务
+  - 将轨迹清洗、评分后转换为多样化推理数据集
+
+
+[2508][ComputerRL: Scaling End-to-End Online Reinforcement Learning for Computer Use Agents](https://arxiv.org/pdf/2508.14040)
+> We manually collect extensive, well-defined tasks and corresponding evaluation functions.  
+> 通过人工构建任务、验证函数  
+
+> If the trajectory successfully solves the task, we assign a reward of 1 to every action that is both correctly formatted and substantially contributes to the solution.  
+> 验证函数应该是复杂到每个action是否对任务完成有益。 
+
+**SFT**：
+  - Model pool提供轨迹数据
+
+**RLVR**：
+  - **Step-Level Group Relative Policy Optimization**：
+    - 一个query的所有rollout的所有step作为一个group
+    - 每个step计算reward，进而计算advantage
+  - **奖励设计**：
+    - 若轨迹成功完成任务，则为所有格式正确且对解决方案有实质贡献的动作分配1分奖励
+    - 否则，未通过验证的轨迹或格式不当的动作均得0分
+  - **Entropulse策略**：
+    - 收集rollout，筛选成功的
+    - RL之间穿插SFT训练这些，可以提高entropy、突破性能瓶颈
+
+
+[2508][SEA: Self-Evolution Agent with Step-wise Reward for Computer Use](https://arxiv.org/pdf/2508.04037)
+> 7b模型在osworld上30.1，比SE-Agent、OpenCUA都更强  
+> 基于QWen2.5-VL-72B训练出来的step model可以判断action的正确性，但没展示prompt  
+> 通过few-shot in-context Learning去生产task
+
+🌟 [2508] [SEAgent: Self-Evolving Computer Use Agent with
+Autonomous Learning from Experience](https://arxiv.org/pdf/2508.04700)
+> Curriculum Generator: 生成任务，搞了4245个任务  
+> World State Model: 也就是reward model, 用的是基于osworld chome的43个task得到的860条轨迹训练qwen2.5vl-7b得到的
+
+**SEAgent框架：**
+1. **Task Initialization（任务初始化）**
+2. **Autonomous Evaluation（自主评估）**
+3. **RFT（Rejection Fine-Tuning）**
+4. **Task Update（任务更新）**
+
+**RFT技术细节：**
+- **错误动作惩罚**：对识别出的错误动作进行惩罚性训练
+- **正确动作模仿**：学习和模仿正确的操作序列
+
+
+
+🌟 [2508] [OpenCUA: Open Foundations for Computer-Use Agents](https://opencua.xlang.ai)
+> 634名标注员针对200+应用/网站，标记了20k+任务的轨迹  
+> 开源了标注软件、数据集  
+> 纯sft训练qwen-vl-32b，osworld上分数34.8
+
+**轨迹数据特性：**
+- **数据规模**：包含22,625条人工标注的计算机使用任务
+- **平台分布**：Windows平台12K条、macOS平台5K条、Ubuntu平台5K条
+- **技术规格**：屏幕分辨率涵盖720p至4K
+- **复杂度**：每条轨迹平均18.6步，体现了任务的复杂性
+- **覆盖范围**：数据覆盖140多个应用程序和190多个网站，常涉及多应用工作流、专业工具和不常用功能
+- **数据集特色**：与现有GUI数据集相比，AGENTNET是首个兼具真实性、复杂性、多样性和多模态特性的桌面轨迹级数据集
+
+**训练数据混合：**
+- **多层级轨迹COT**：混合不同层级的轨迹思维链
+  - L1（动作）
+  - L2（思考 + 动作）
+  - L3（观察 + 思考 + 动作）
+- **数据组成**：轨迹数据、grounding数据、通用SFT数据
+
+**训练流程：**
+- **三种训练策略**：
+  - **仅阶段2**：opencua-qwen2-7b和opencua-a3b
+  - **阶段1+阶段2**：opencua-32b
+  - **联合策略**：opencua-7b
+
+- **具体配比**：
+  - **仅阶段2**：56%轨迹数据、14%grounding数据、30%通用SFT数据
+  - **阶段1+阶段2**：
+    - 阶段1：grounding数据、教程式演示、状态转换描述数据、通用VL和通用text SFT数据
+    - 阶段2：45%轨迹数据、20%grounding数据、35%通用数据
+  - **联合策略**：20%轨迹数据、20%grounding数据、60%通用数据
+
+
+[2505][ZeroGUI: Automating Online GUI Learning at Zero Human Cost](https://arxiv.org/pdf/2505.23762)
+> 复用用osworld的task config，用LLM生成更多指令
+> task verifier用qwen2.5vl-32b
+
 [2504] [UI-TARS-1.5](https://seed-tars.com/1.5/)
-> 纯秀肌肉，没有披露更多细节，只提到了“UI-TARS-1.5 integrates advanced reasoning enabled by reinforcement learning”  
+> 没有披露太多细节，只提到了“UI-TARS-1.5 integrates advanced reasoning enabled by reinforcement learning”  
 > osworld上分数42.5，7b的则是28
 
+🌟 [2501] [UI-TARS: Pioneering Automated GUI Interaction with Native Agents](https://arxiv.org/pdf/2501.12326)
+> grounding数据从公开数据集中收集  
+> 轨迹数据两部分：145k移动端轨迹，团队标注的PC轨迹  
+> 用VLM给轨迹数据打上思维链  
+> 迭代【训练-推轨迹-校正轨迹】这个过程  
+> 校正轨迹通过多级过滤实现：1）规则启发式：移除无效动作；2）VLM评分：过滤低分轨迹；3）人工审核：截断错误步骤，保留有效前缀  
+> 两种dpo轨迹对：1）公式6，错误步骤-正确步骤；2）公式7，错误发生后，不采取补救-采取补救
 
 ## 6. Others
 ### x.1 General Agent
